@@ -28,7 +28,7 @@ with st.sidebar:
     st.date_input('Today'); st.time_input('Current time')
 
 if welcome:
-    st.image('media_streamlit/kidcover.png')
+    st.image('media/streamlit/kidcover.png')
     
     col1, col2, col3 = st.columns([1,4,1])
     with col1:
@@ -44,13 +44,13 @@ if welcome:
         st.write('Care - Protect - Support')
     with col6:
         st.empty()
-    st.audio('media_streamlit/We are the Children.mp3')
+    st.audio('media/streamlit/We are the Children.mp3')
     st.write('Song: We are the worlds'); st.caption('Singer: Children group'); st.caption('Source: Internet')
 
     
 # DETECTION BY PHOTO UPLOAD
 if pic_pred:
-    st.image('media_streamlit/dreamstime_88204858.png'); st.header('Do your kids sit correctly? Check it out!')
+    st.image('media/streamlit/dreamstime_88204858.png'); st.header('Do your kids sit correctly? Check it out!')
 
     with mp_pose.Pose(static_image_mode=True, 
                         min_detection_confidence=0.7, 
@@ -92,12 +92,11 @@ if pic_pred:
             try:                           
                 if not os.path.exists(user_folder):
                     os.makedirs(user_folder)
+                    img_saved_name  = user_folder + 'user' + str(user_count) +'.jpg'
+                    img_saved       = cv2.imwrite(img_saved_name, image)
             except:
                 pass
-            img_saved_name  = user_folder + 'user' + str(user_count) +'.jpg'
-            img_saved       = cv2.imwrite(img_saved_name, image)
-
-
+            
 
 # DETECTION BY UPLOADING A VIDEO
 if vid_pred:
