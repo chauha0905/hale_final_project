@@ -150,8 +150,8 @@ def get_lmk_array_vid(img):
 
 def show_result(prediction_proba, pred_proba_per):
     if prediction_proba[0] >0.6:
-        st.write('Prediction:', '__GOOD POSTURE__', '. Probability:', pred_proba_per)
+        st.write('Prediction:', '__GOOD POSTURE__', '(Probability: ' + str(pred_proba_per) + ')')
     if prediction_proba[0] <=0.5:
-        st.write('Prediction:', '__POOR POSTURE__', '. Probability:', pred_proba_per)
+        st.write('Prediction:', '__POOR POSTURE__', '(Probability: ' + str(pred_proba_per) + ')')
     if prediction_proba[0] >0.5 and prediction_proba[0] <=0.6:
-        st.write('Prediction:', '_UNKNOWN & DETECTING...__', '. Probability:', pred_proba_per)
+        st.write('Prediction:', '_UNKNOWN & DETECTING...__', '(Probability: ' + str(pred_proba_per) + ')')

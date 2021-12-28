@@ -16,30 +16,47 @@ mp_drawing  = mp.solutions.drawing_utils
 
 
 # BUILD STREAMLIT LAYOUT
-menu = ['PicPred', 'VidPred', 'CamPred']
-choice = st.sidebar.selectbox('Sitting Posture Recognition', menu)
+homebox_title   = st.sidebar.write('HOME MENU')
+welcome         = st.sidebar.checkbox('Hello!')
+pic_pred        = st.sidebar.checkbox('PicPred')
+vid_pred        = st.sidebar.checkbox('VidPred')
+webcam_pred     = st.sidebar.checkbox('CamPred')
 
 with st.sidebar:
-    st.text('') 
-    st.text('')
-    st.text('')
-    st.text('')
-    st.text('')
-    st.text('') 
+    st.text(''); st.text(''); st.text(''); st.text(''); st.text(''); st.text('')
     # Add in date & time in sidebar
-    st.date_input('Today')
-    st.time_input('Current time')
+    st.date_input('Today'); st.time_input('Current time')
 
+if welcome:
+    st.image('media_streamlit/kidcover.png')
+    
+    col1, col2, col3 = st.columns([1,4,1])
+    with col1:
+        st.empty()
+    with col2:
+        st.subheader('Children are treasure!')
+    with col3:
+        st.empty()
+    col4, col5, col6 = st.columns([1,2,1])
+    with col4:
+        st.empty()
+    with col5:
+        st.write('Care - Protect - Support')
+    with col6:
+        st.empty()
+    st.audio('media_streamlit/We are the Children.mp3')
+    st.write('Song: We are the worlds'); st.caption('Singer: Children group'); st.caption('Source: Internet')
 
+    
 # DETECTION BY PHOTO UPLOAD
-if choice == 'PicPred':
-    st.title('Is Your Posture Right?'); st.text(""); st.write('Upload your picture here')
+if pic_pred:
+    st.image('media_streamlit/dreamstime_88204858.png'); st.header('Do your kids sit correctly? Check it out!')
 
     with mp_pose.Pose(static_image_mode=True, 
                         min_detection_confidence=0.7, 
                             min_tracking_confidence=0.5) as pose:
         
-        uploaded_photo = st.file_uploader('',['png', 'jpeg', 'jpg'])
+        uploaded_photo = st.file_uploader("Upload your kid's sitting picture!",['png', 'jpeg', 'jpg'])
         if uploaded_photo != None:
     
             # READING IMG
@@ -55,7 +72,7 @@ if choice == 'PicPred':
             image                   = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
             # DRAWING LANDMARKS & DISPLAY ON STREAMLIT 
-            mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+            # mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
             st.image(image, channels='BGR')
 
             try:
@@ -68,15 +85,28 @@ if choice == 'PicPred':
                 result              = show_result(prediction_proba, pred_proba_per)
             except:
                 pass
+            
+            # SAVE IMAGE UPLOADED BY USER ON STREAMLIT (for improving model in the future)
+            user_folder = 'user_photo'
+            user_count = 1
+            try:                           
+                if not os.path.exists(user_folder):
+                    os.makedirs(user_folder)
+            except:
+                pass
+            img_saved_name  = user_folder + 'user' + str(user_count) +'.jpg'
+            img_saved       = cv2.imwrite(img_saved_name, image)
+
 
 
 # DETECTION BY UPLOADING A VIDEO
-elif choice == 'VidPred':
-    st.text(""); st.write('Upload your video here')
+if vid_pred:
+    st.image('media_streamlit/cover3.png')
+    st.header("Let try with a video!")
 
     with mp_pose.Pose(min_detection_confidence=0.7, min_tracking_confidence=0.5) as pose:
 
-        uploaded_video  = st.file_uploader(' ', ['mp4', 'mov'])
+        uploaded_video  = st.file_uploader('Upload your video here!', ['mp4', 'mov'])
         if uploaded_video is not None: 
             tfile = tempfile.NamedTemporaryFile(delete=False)
             tfile.write(uploaded_video.read())
@@ -121,13 +151,14 @@ elif choice == 'VidPred':
       
 
 # DETECTION WEBCAM (REAL-TIME)
-elif choice == 'CamPred':
+if webcam_pred:
+    st.header('Realtime detection'); st.caption('(Using local webcam)')
 
     with mp_pose.Pose(min_detection_confidence=0.7, 
                         min_tracking_confidence=0.5) as pose:
 
         cap = cv2.VideoCapture(0)  # device 0
-        run = st.checkbox('Start running')
+        run = st.checkbox('Start running your webcam')
 
         if not cap.isOpened():
             raise IOError("Cannot open webcam")

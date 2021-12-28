@@ -95,7 +95,7 @@ def result_result(prediction_proba, pred_proba_per):
                     cv2.FONT_HERSHEY_DUPLEX, 1.5, (245, 117, 16), 2, cv2.LINE_AA)
 
 # LOAD VIDEO
-video_uploaded = cv2.VideoCapture('correct_30_rightside.mov')
+video_uploaded = cv2.VideoCapture('media_testfol/video/correct_50_leftside.mov')
 
 while video_uploaded.isOpened():
     # for frame in range(frame_count):
@@ -103,7 +103,7 @@ while video_uploaded.isOpened():
     # video_uploaded.set(cv2.CAP_PROP_POS_FRAMES, frame_skip)
 
     ret, frame = video_uploaded.read()
-
+    image                   = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     frame_h, frame_w, _     = frame.shape
     frame_copy              = frame.copy()
     imgRGB                  = cv2.cvtColor(frame_copy, cv2.COLOR_BGR2RGB)
