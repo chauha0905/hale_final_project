@@ -78,7 +78,7 @@ def get_lmk_array(img):
 
 
 def result_result(prediction_proba, pred_proba_per):
-    if prediction_proba[0] >0.6:
+    if prediction_proba[0] >0.65:
             cv2.putText(frame_copy, 'GOOD', (130,80), 
                         cv2.FONT_HERSHEY_DUPLEX, 1.5, (0, 0, 255), 2, cv2.LINE_AA)
             cv2.putText(frame_copy, pred_proba_per, (420,80), 
@@ -88,7 +88,7 @@ def result_result(prediction_proba, pred_proba_per):
                     cv2.FONT_HERSHEY_DUPLEX, 1.5, (0, 0, 255), 2, cv2.LINE_AA)
         cv2.putText(frame_copy, pred_proba_per, (420,80), 
                     cv2.FONT_HERSHEY_DUPLEX, 1.5, (245, 117, 16), 2, cv2.LINE_AA)
-    if prediction_proba[0] >0.5 and prediction_proba[0] <=0.6:
+    if prediction_proba[0] >0.5 and prediction_proba[0] <=0.65:
         cv2.putText(frame_copy, 'UNKNOWN/DETECTING', (130,80), 
                     cv2.FONT_HERSHEY_DUPLEX, 1.5, (0, 0, 255), 2, cv2.LINE_AA)
         cv2.putText(frame_copy, pred_proba_per, (420,80), 
