@@ -78,24 +78,24 @@ def get_lmk_array(img):
 
 
 def result_result(prediction_proba, pred_proba_per):
-    if prediction_proba[0] >0.65:
+    if prediction_proba[0] >0.6:
             cv2.putText(frame_copy, 'GOOD', (130,80), 
                         cv2.FONT_HERSHEY_DUPLEX, 1.5, (0, 0, 255), 2, cv2.LINE_AA)
             cv2.putText(frame_copy, pred_proba_per, (420,80), 
                         cv2.FONT_HERSHEY_DUPLEX, 1.5, (245, 117, 16), 2, cv2.LINE_AA)
-    if prediction_proba[0] <=0.5:
+    else:
         cv2.putText(frame_copy, 'POOR', (130,80), 
                     cv2.FONT_HERSHEY_DUPLEX, 1.5, (0, 0, 255), 2, cv2.LINE_AA)
         cv2.putText(frame_copy, pred_proba_per, (420,80), 
                     cv2.FONT_HERSHEY_DUPLEX, 1.5, (245, 117, 16), 2, cv2.LINE_AA)
-    if prediction_proba[0] >0.5 and prediction_proba[0] <=0.65:
-        cv2.putText(frame_copy, 'UNKNOWN/DETECTING', (130,80), 
-                    cv2.FONT_HERSHEY_DUPLEX, 1.5, (0, 0, 255), 2, cv2.LINE_AA)
-        cv2.putText(frame_copy, pred_proba_per, (420,80), 
-                    cv2.FONT_HERSHEY_DUPLEX, 1.5, (245, 117, 16), 2, cv2.LINE_AA)
+    # if prediction_proba[0] >0.5 and prediction_proba[0] <=0.6:
+    #     cv2.putText(frame_copy, 'UNKNOWN/DETECTING', (130,80), 
+    #                 cv2.FONT_HERSHEY_DUPLEX, 1.5, (0, 0, 255), 2, cv2.LINE_AA)
+    #     cv2.putText(frame_copy, pred_proba_per, (420,80), 
+    #                 cv2.FONT_HERSHEY_DUPLEX, 1.5, (245, 117, 16), 2, cv2.LINE_AA)
 
 # LOAD VIDEO
-video_uploaded = cv2.VideoCapture('media_testfol/video/correct_50_leftside.mov')
+video_uploaded = cv2.VideoCapture('media/test_video/test_01.mov')
 
 while video_uploaded.isOpened():
     # for frame in range(frame_count):

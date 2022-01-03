@@ -79,21 +79,21 @@ def get_lmk_array(img):
     return imp_lmk_array
 
 def result_result(prediction_proba, pred_proba_per):
-    if prediction_proba[0] >0.65:
+    if prediction_proba[0] >0.6:
             cv2.putText(frame_copy, 'GOOD', (380,40), 
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
             cv2.putText(frame_copy, pred_proba_per, (200,40), 
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (245, 117, 16), 2, cv2.LINE_AA)
-    if prediction_proba[0] <=0.5:
+    else:
         cv2.putText(frame_copy, 'POOR', (380,40), 
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
         cv2.putText(frame_copy, pred_proba_per, (200,40), 
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (245, 117, 16), 2, cv2.LINE_AA)
-    if prediction_proba[0] >0.5 and prediction_proba[0] <=0.65:
-        cv2.putText(frame_copy, 'UNKNOWN', (380,40), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
-        cv2.putText(frame_copy, pred_proba_per, (200,40), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 1, (245, 117, 16), 2, cv2.LINE_AA)
+    # if prediction_proba[0] >0.5 and prediction_proba[0] <=0.6:
+    #     cv2.putText(frame_copy, 'UNKNOWN', (380,40), 
+    #                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
+    #     cv2.putText(frame_copy, pred_proba_per, (200,40), 
+                    # cv2.FONT_HERSHEY_SIMPLEX, 1, (245, 117, 16), 2, cv2.LINE_AA)
 
 
 #SETUP WEBCAM
@@ -131,7 +131,7 @@ while cap.isOpened():
         X                   = pd.DataFrame([imp_lmk_array])
         prediction          = model.predict(X)[0]
         prediction_proba    = model.predict_proba(X)[0]
-        pred_proba_per      = str(round(prediction_proba[np.argmax(prediction_proba)],2) * 100) + '%'
+        pred_proba_per      = str(round(prediction_proba[np.argmax(prediction_proba)],2))
         
         # BOX TO SHOW RESULT 
         cv2.rectangle(frame_copy, (0,0), (frame_w, 60), (255, 255, 255), -1)
